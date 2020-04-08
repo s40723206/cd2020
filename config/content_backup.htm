@@ -106,11 +106,121 @@ EXIT</pre>
 <p><em>Four Wheel Car-</em>Analysis and integration</p>
 <p><span style="color: #ff0000;"><a href="https://www.coppeliarobotics.com/helpFiles/index.html">BubbleRob tutorial</a>:                                                                   <span style="color: #33cccc;">此部分由40723206提供</span></span></p>
 <p style="text-align: justify;">在此教程中會讓我們設計簡單的BubbleRob機器人並進行一些基礎的模擬操作，而大二上我們其實就有實際的以v-rep操作過這個教程，在這個教程中的說明包括了如何建造模型機器人主體、車輪及後方支撐滑塊，還有如何建造及設置障礙物，以及設定好的距離傳感器後使其去感測並避開我們所設置的障礙物，而最重要的要點是如何去設計指令讓傳動器依照我們所想要的方式去做動，且當距離感測器偵測到障礙物時才能使機器人迅速閃避障礙物，另外還有視覺辨識器，使機器人在移動時，讓我們能夠觀測到機器人行徑方向之路況。</p>
+<p style="text-align: justify;"><iframe allowfullscreen="allowfullscreen" height="314" src="//www.youtube.com/embed/eKYTV6aoELw" width="560"></iframe></p>
 <p>week4</p>
 <p>week5</p>
 <h2>week6~9</h2>
 <h2>week10~14</h2>
 <h2>week15~18</h2>
+<h1>Assignment</h1>
+<h2>assignment1</h2>
+<h3>Random Grouping</h3>
+<h3>Potable System</h3>
+<h3>Four Wheel Car</h3>
+<p><em>Four Wheel Car-</em>Analysis and integration</p>
+<p><span style="color: #ff0000;"><a href="https://www.coppeliarobotics.com/helpFiles/index.html">BubbleRob tutorial</a>:                                                                   <span style="color: #33cccc;">此部分由40723206提供</span></span></p>
+<p style="text-align: justify;">在此教程中會讓我們設計簡單的BubbleRob機器人並進行一些基礎的模擬操作，而大二上我們其實就有實際的以v-rep操作過這個教程，在這個教程中的說明包括了如何建造模型機器人主體、車輪及後方支撐滑塊，還有如何建造及設置障礙物，以及設定好的距離傳感器後使其去感測並避開我們所設置的障礙物，而最重要的要點是如何去設計指令讓傳動器依照我們所想要的方式去做動，且當距離感測器偵測到障礙物時才能使機器人迅速閃避障礙物，另外還有視覺辨識器，使機器人在移動時，讓我們能夠觀測到機器人行徑方向之路況。</p>
+<p style="text-align: justify;"><span style="color: #ff0000;">translation Simulation ~ PDF</span></p>
+<p style="text-align: justify;"><span style="color: #ff0000;"><img alt="" height="846" src="/images/模擬1.jpg" width="567"/></span></p>
+<p style="text-align: justify;"><span><span style="color: #ff0000;">translation  Simulation dialog ~ PDF</span></span></p>
+<p style="text-align: justify;"><span><img alt="" height="861" src="/images/模擬2.jpg" width="568"/></span></p>
+<p><span lang="zh-TW" style="color: #ff0000;">Line following BubbleRob tutorial</span></p>
+<p><span lang="zh-TW">在本教程中，我們旨在擴展BubbleRob的功能，以使他/她遵循地面上的規則。確保您已經閱讀並理解了第一個BubbleRob教程。本教程由Eric Rohmer提供。</span></p>
+<p><span lang="zh-TW">在CoppeliaSim的安裝文件夾中的tutorials / BubbleRob中加載第一個BubbleRob教程的場景。與本教程相關的場景文件位於tutorials / LineFollowingBubbleRob中。<br/>下圖說明了我們將設計的仿真場景：</span></p>
+<h5 class="tw-data-text tw-text-large tw-ta" data-placeholder="翻譯" dir="ltr"><span lang="zh-TW"><img height="353" src="https://www.coppeliarobotics.com/helpFiles/en/images/lbubbleRobTut1.jpg" width="544"/><br/></span></h5>
+<p><span lang="zh-TW">我們首先創建3個視覺傳感器中的第一個，並將其附加到bubbleRob對象。選擇[菜單欄-&gt;添加-&gt;視覺傳感器-&gt;正交類型]。通過雙擊場景層次中新創建的視覺傳感器圖標來編輯其屬性，並更改參數以反映以下對話框：</span></p>
+<p><span lang="zh-TW">                                  <img height="405" src="https://www.coppeliarobotics.com/helpFiles/en/images/lbubbleRobTut2.jpg" width="261"/></span></p>
+<p><span lang="zh-TW">視覺傳感器必需面向地面，因此選擇它，然後在“方向”對話框中的“方向”選項上，將“ Alpha-Beta-Gamma”項設置為[180; 0; 0]。</span></p>
+<p><span lang="zh-TW">我們有幾種可能性可以讀取視覺傳感器。由於我們的視覺傳感器只有一個像素，並且操作簡單，因此我們只需查詢視覺傳感器讀取的圖像的平均強度值即可。對於更複雜的情況，我們可以設置視覺回調函數。現在，複製並貼上視覺傳感器兩次，並將其名稱調整為leftSensor，middleSensor和rightSensor。將bubbleRob設置為其關係（即，將其附加到bubbleRob對象）。現在，您的傳感器在場景層次中應如下所示：</span></p>
+<p><span lang="zh-TW">                                     <img src="https://www.coppeliarobotics.com/helpFiles/en/images/lbubbleRobTut4.jpg"/></span></p>
+<p><span lang="zh-TW">讓我們正確放置傳感器。為此使用位置對話框，在位置選項卡上，並設置以下絕對坐標： 左傳感器：[0.2; 0.042; 0.018] 中間傳感器：[0.2; 0; 0.018] 右傳感器：[0.2; -0.042; 0.018]<br/><span><br/>現在讓我們修改環境。我們可以移去BubbleRob前面的幾個圓柱體。接下來，我們將構建機器人將嘗試遵循的路徑。從現在開始切換到頂視圖：通過頁面選擇器工具欄按鈕選擇頁面4。然後點擊[菜單欄-&gt;添加-&gt;路徑-&gt;圓圈類型]。使用鼠標啟用對象移動。您可以通過兩種方式調整路徑的形狀： 選擇路徑（並且只有路徑）後，按住Ctrl並點擊其控制點之一。然後可以將它們拖動到正確的位置。 選擇路徑後，進入路徑編輯模式。在那裡，您可以靈活地調整各個路徑控制點。</span><br/></span></p>
+<p><span lang="zh-TW">一旦對路徑的幾何形狀滿意（您隨時可以在以後的階段對其進行修改），請選擇它，然後在路徑屬性中取消選中“顯示點的方向”，“顯示路徑線”和“顯示路徑上的當前位置”。然後點擊顯示路徑整形對話框。這將打開路徑整形對話框。點擊啟用路徑變更，將類型設置為水平線段，並將縮放因子設置為4.0。最後將顏色調整為黑色。我們必須對路徑進行最後一個重要的調整：當前，路徑的z位置與地板的z位置重合。結果是有時我們會看到路徑，有時會看到地板（這種效果在openGl行話中被稱為“ z-fighting”）。這不僅影響我們所看到的，而且還會影響視覺傳感器所看到的。為了避免與z戰鬥有關的問題，只需將路徑對象的位置向上移動0.5毫米即可。</span></p>
+<p><span lang="zh-TW">最後一步是調整BubbleRob的控制器，使其也將遵循黑色路徑。打開附加到bubbleRob的子腳本，並將其替換為以下代碼：</span></p>
+<table>
+<tbody>
+<tr>
+<td>
+<pre class="lightRedBox">function speedChange_callback(ui,id,newVal)
+    speed=minMaxSpeed[1]+(minMaxSpeed[2]-minMaxSpeed[1])*newVal/100
+end
+
+function sysCall_init()
+    -- This is executed exactly once, the first time this script is executed
+    bubbleRobBase=sim.getObjectAssociatedWithScript(sim.handle_self)
+    leftMotor=sim.getObjectHandle("leftMotor")
+    rightMotor=sim.getObjectHandle("rightMotor")
+    noseSensor=sim.getObjectHandle("sensingNose")
+    minMaxSpeed={50*math.pi/180,300*math.pi/180}
+    backUntilTime=-1 -- Tells whether bubbleRob is in forward or backward mode
+    floorSensorHandles={-1,-1,-1}
+    floorSensorHandles[1]=sim.getObjectHandle("leftSensor")
+    floorSensorHandles[2]=sim.getObjectHandle("middleSensor")
+    floorSensorHandles[3]=sim.getObjectHandle("rightSensor")
+    -- Create the custom UI:
+        xml = '&lt;ui title="'..sim.getObjectName(bubbleRobBase)..' speed" closeable="false" resizeable="false" activate="false"&gt;'..[[
+        &lt;hslider minimum="0" maximum="100" onchange="speedChange_callback" id="1"/&gt;
+        &lt;label text="" style="* {margin-left: 300px;}"/&gt;
+        &lt;/ui&gt;
+        ]]
+    ui=simUI.reate(xml)
+    speed=(minMaxSpeed[1]+minMaxSpeed[2])*0.5
+    simUI.setSliderValue(ui,1,100*(speed-minMaxSpeed[1])/(minMaxSpeed[2]-minMaxSpeed[1]))
+end
+
+function sysCall_actuation()
+    result=sim.readProximitySensor(noseSensor)
+    if (result&gt;0) then backUntilTime=sim.getSimulationTime()+4 end
+
+    -- read the line detection sensors:
+    sensorReading={false,false,false}
+    for i=1,3,1 do
+        result,data=sim.readVisionSensor(floorSensorHandles[i])
+        if (result&gt;=0) then
+            sensorReading[i]=(data[11]&lt;0.3) -- data[11] is the average of intensity of the image
+        end
+        print(sensorReading[i])
+    end
+
+    -- compute left and right velocities to follow the detected line:
+    rightV=speed
+    leftV=speed
+    if sensorReading[1] then
+        leftV=0.03*speed
+    end
+    if sensorReading[3] then
+        rightV=0.03*speed
+    end
+    if sensorReading[1] and sensorReading[3] then
+        backUntilTime=sim.getSimulationTime()+2
+    end
+
+    if (backUntilTime&lt;sim.getSimulationTime()) then
+        -- When in forward mode, we simply move forward at the desired speed
+        sim.setJointTargetVelocity(leftMotor,leftV)
+        sim.setJointTargetVelocity(rightMotor,rightV)
+    else
+        -- When in backward mode, we simply backup in a curve at reduced speed
+        sim.setJointTargetVelocity(leftMotor,-speed/2)
+        sim.setJointTargetVelocity(rightMotor,-speed/8)
+    end
+end
+
+function sysCall_cleanup()
+	simUI.destroy(ui)<br/>end</pre>
+</td>
+</tr>
+</tbody>
+</table>
+<p><span lang="zh-TW">您可以輕鬆地調試以下視覺傳感器的生產線：選擇一個，然後在場景視圖中選擇[右鍵-&gt;添加-&gt;浮動視圖]，然後在新添加的浮動視圖中選擇[右鍵-&gt;視圖- -&gt;將視圖與選定的視覺傳感器關聯]。</span></p>
+<p><strong>CoppeliaSim</strong></p>
+<p>外部控制器教程 在CoppeliaSim中，有幾種方法可以控制機器人或仿真： 最方便的方法是編寫一個子腳本來處理給定機器人或模型的行為。這是最方便的方法，因為子腳本直接附加到場景對象，它們將與相關的場景對像一起復制，它們不需要使用外部工具進行任何編譯，它們可以在線程或非線程模式下運行，它們可以通過自定義Lua函數或Lua擴展庫進行擴展。使用子腳本的另一個主要優點是：與本節中提到的後3種方法（即使用常規API）一樣，沒有通信延遲，並且子腳本是應用程序主線程的一部分（固有的同步操作）。</p>
+<p><span>   <span> </span></span>可以控制機器人或模擬的另一種方法是編寫插件。插件機制允許使用回調機制，自定義<span>Lua</span>函數註冊，當然還可以訪問外部函數庫。插件通常與子腳本結合使用。使用插件的主要優勢還在於，與本節中提到的後<span>3</span>種方法（即使用常規<span>API</span>）一樣，沒有通信延遲，並且插件是應用程序主線程的一部分（固有的同步操作）。插件的缺點是：它們的編程更加複雜，並且也需要使用外部編譯。</p>
+<p><span>  <span> </span></span>控制機器人或模擬的第三種方法是編寫依賴於遠程<span>API</span>的外部客戶端應用程序。如果您需要從外部應用程序，機器人或另一台計算機運行控制代碼，這是一種非常便捷的方法。遠程<span>API</span>有兩個版本：基於<span>B0</span>的遠程<span>API</span>和舊版遠程<span>API</span>。</p>
+<p><span>   <span> </span></span>控制機器人或仿真的第五種方法是通過<span>ROS</span>節點。<span><span> </span>ROS</span>與遠程<span>API</span>相似，是使多個分佈式進程相互通信的便捷方法。儘管遠程<span>API</span>非常輕巧且快速，但它僅允許與<span>CoppeliaSim</span>通信。另一方面，<span>ROS</span>允許幾乎將任意數量的進程相互連接，並且提供了大量兼容的庫。</p>
+<p><span>    <span> </span></span>控制機器人或模擬的第六種方法是通過<span>BlueZero</span>（<span>BØ</span>）節點。與<span>ROS</span>類似，<span>BlueZero</span>是使多個分佈式進程相互通信的一種便捷方法。</p>
+<p><span>    <span> </span></span>控制機器人或模擬的第七種方法是編寫一個外部應用程序，該應用程序通過各種方式（例如管道，套接字，串行端口等）與<span>CoppeliaSim</span>插件或<span>CoppeliaSim</span>腳本進行通信。</p>
+<h2>assignment2</h2>
+<h2>assignment3</h2>
 <h1>Develop</h1>
 <p><a href="https://github.com/mdecourse/cmsimde">https://github.com/mdecourse/cmsimde</a> 的開發, 可以在一個目錄中放入 cmsimde, 然後將 up_dir 中的內容放到與 cmsimde 目錄同位階的地方, 使用 command 進入 cmsimde 目錄, 執行 python wsgi.py, 就可以啟動, 以瀏覽器 https://localhost:9443 就可以連接, 以 admin 作為管理者密碼, 就可以登入維護內容.</p>
 <p>cmsimde 的開發採用 Leo Editor, 開啟 cmsimde 目錄中的 cmsimde.leo 就可以進行程式修改, 結束後, 若要保留網際內容, 只要將 cmsimde 外部的內容倒回 up_dir 目錄中即可後續對 cmsimde 遠端倉儲進行改版.</p>
