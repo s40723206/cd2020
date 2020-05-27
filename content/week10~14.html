@@ -143,7 +143,7 @@ img.add_border {
                             <li><a href="./../blog/index.html">blog</a></li>
                         </ul>
                       </li>
-                     <li><a href='group-cd2020bg1.html'>group-cd2020bg1</a><li class='has-children'><a href='weeks.html'>weeks</a><ul class='dropdown'><li><a href='week1~5.html'>week1~5</a><li><a href='week6~9.html'>week6~9</a><li><a href='week10~14.html'>week10~14</a><li><a href='week15~18.html'>week15~18</a></li></ul><li class='has-children'><a href='Assignment.html'>Assignment</a><ul class='dropdown'><li class='has-children'><a href='assignment1.html'>assignment1</a><ul class='dropdown'><li><a href='Random Grouping.html'>Random Grouping</a><li><a href='Potable System.html'>Potable System</a><li><a href='Four Wheel Car.html'>Four Wheel Car</a></li></ul><li><a href='assignment2.html'>assignment2</a><li><a href='assignment3.html'>assignment3</a></li></ul><li><a href='Develop.html'>Develop</a></li>
+                     <li><a href='group-cd2020bg1.html'>group-cd2020bg1</a><li class='has-children'><a href='weeks.html'>weeks</a><ul class='dropdown'><li><a href='week1~5.html'>week1~5</a><li><a href='week6~9.html'>week6~9</a><li><a href='week10~14.html'>week10~14</a><li><a href='week15~18.html'>week15~18</a></li></ul><li class='has-children'><a href='Assignment.html'>Assignment</a><ul class='dropdown'><li class='has-children'><a href='assignment1.html'>assignment1</a><ul class='dropdown'><li><a href='Random Grouping.html'>Random Grouping</a><li><a href='Potable System.html'>Potable System</a><li><a href='Four Wheel Car.html'>Four Wheel Car</a></li></ul><li class='has-children'><a href='assignment2.html'>assignment2</a><ul class='dropdown'><li><a href='IndustrialAndEngineeringProductDesignCollaboration.html'>IndustrialAndEngineeringProductDesignCollaboration</a><li><a href='DesignCollaborationBetterProducts.html'>DesignCollaborationBetterProducts</a><li><a href='MechanicalDesignProcess thirth segment.html'>MechanicalDesignProcess thirth segment</a><li><a href='MechanicalDesignProcess first segment.html'>MechanicalDesignProcess first segment</a></li></ul><li><a href='assignment3.html'>assignment3</a></li></ul><li><a href='Develop.html'>Develop</a></li>
                       </ul>
                 </nav>
               </div>
@@ -155,6 +155,35 @@ img.add_border {
           
         </header>
     <div id="tipue_search_content">week6~9 << <a href='week6~9.html'>Previous</a> <a href='week15~18.html'>Next</a> >> week15~18<br /><h1>week10~14</h1>
+<p><strong>week10</strong></p>
+<p><em><strong>對ssh連線</strong></em></p>
+<p>(1)到y槽的portablegit將sh_for_solvespace檔案複製並修改成sh.exe</p>
+<p>(2)進入黑窗輸入sh和ssh-keygen -t rsa -b 4096 -C "使用者學號"</p>
+<p>(3)下載putty並利用其中的putty.gen創建兩把金鑰</p>
+<p>(4)修改啟動器中的指令</p>
+<pre class="brush:py;auto-links:false;toolbar:false" contenteditable="false">set GIT_HOME=%Disk%:\portablegit\bin\
+set GIT_SSH=%Disk%:\putty\plink.exe</pre>
+<p>(5)進入config中更改指令url = git@github.com:mdecourse/cd2020.git在mdecourse的地方要改成自己的學號<br/>(6)開啟putty.exe進去設定github.com和proxy位置其中ssh中的auth的地方必須選取剛剛創建的金鑰</p>
+<p>(7)用編輯器複製課程網站中的step6指令並且儲存放入.ssh資料夾之中</p>
+<pre class="brush:py;auto-links:false;toolbar:false" contenteditable="false">ProxyCommand y:/putty/plink.exe github.com %h %p
+
+Host github.com
+    User git
+    Port 22
+    Hostname github.com
+
+    TCPKeepAlive yes
+    IdentitiesOnly yes</pre>
+<p>(8)進入github並且在setting中的ssh將金鑰開啟並複製放入金鑰設置處</p>
+<p><iframe allowfullscreen="allowfullscreen" height="314" src="//www.youtube.com/embed/KLR2AYgxIcw" width="560"></iframe></p>
+<p><strong>week12</strong></p>
+<p>第一組 第四次會議 (WEEK12) <br/> <br/>1.成員簽到等候 2.分工作業進度回報及問題討論 3.有問題的同學提出問題 <br/> <br/>成員名單 <br/>1.40723201 (簽) 已建立完成網站 <br/>2.40723206 (簽) 已建立完成網站 小組長 <br/>3.40723213 (簽) 已建立完成網站 <br/>4.40723216 (簽) 已建立完成網站 <br/>5. 40723223(簽) 已建立完成網站 <br/>6.40723226 (簽) 已建立完成網站 <br/>7.40723229 (簽) 已建立完成網站 小組長 <br/>8.40723230 () 已建立完成網站 <br/>9.40723241 (簽) 已建立完成網站 <br/>10.40723242 (簽) 已建立完成網站 小組長 <br/>11.40723246 (group leader) (簽) 已建立完成網站<br/> <br/><span style="color: #ff0000;">topic2:</span> <br/><span style="color: #0000ff;">coppeliasim</span>:40723246 <br/><span style="color: #0000ff;">MSModelingAndTFApproaches.pdf</span>. 207 頁:6 人 <br/>40723201 1-30 <br/>40723213 31-60 <br/>40723216 61-90 <br/>40723223 91-120 <br/>40723226 121-150 <br/>40723246 151-207 <br/><span style="color: #0000ff;">MechatronicDesignCases.pdf</span>. 46 頁:2 人 <br/>40723229 1-23 <br/>40723230 24-46 <br/><span style="color: #ff0000;">topic3:</span> <br/><span style="color: #0000ff;">MechaFutureAndChallenges.pdf</span>. 38 頁:2 人 <br/>40723206 1-19 <br/>40723241 20-38 <br/><span style="color: #0000ff;">MechaEducFutureNeed.pdf</span>. 20 頁:1 人 <br/>40723246 20</p>
+<p><strong>直播meeting4影片:</strong></p>
+<p>網址:<a href="https://youtu.be/Ti7BFHDErb8">https://youtu.be/Ti7BFHDErb8</a></p>
+<p><iframe allowfullscreen="allowfullscreen" height="314" src="//www.youtube.com/embed/Ti7BFHDErb8" width="560"></iframe></p>
+<p><strong>week14</strong></p>
+<p>MechaFutureAndChallenges (p.20~38)</p>
+<p>downlaod pdf:<a href="https://github.com/s40723206/cd2020/blob/master/downloads/assignment%203/MechaFutureAndChallenges.pdf">https://github.com/s40723206/cd2020/blob/master/downloads/assignment%203/MechaFutureAndChallenges.pdf</a></p>
 <br />week6~9 << <a href='week6~9.html'>Previous</a> <a href='week15~18.html'>Next</a> >> week15~18</div>
         
     <!-- footer -->
