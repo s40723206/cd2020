@@ -176,15 +176,95 @@ Host github.com
     IdentitiesOnly yes</pre>
 <p>(8)進入github並且在setting中的ssh將金鑰開啟並複製放入金鑰設置處</p>
 <p><iframe allowfullscreen="allowfullscreen" height="314" src="//www.youtube.com/embed/KLR2AYgxIcw" width="560"></iframe></p>
+<p><em><strong>Ubnutu對外連線-IPV4</strong></em></p>
+<p>1.選擇主機網路<span>NAT Network</span>，新增埠號如下圖所示<span>:</span></p>
+<p><span><img alt="" height="202" src="http://mde.tw/cdbw15-2/images/23.png" width="584"/></span></p>
+<p>2.登入密碼一樣是<span>kmol2020</span></p>
+<p>3.打開<span>LXTermial</span>輸入<span>ifconfig&gt;sudo apt install net-tools</span>輸入密碼也是<span>kmol2020</span></p>
+<p>4.輸入<span>ping6 127.0.0.1</span>測試是否可執行</p>
+<p>5.進入<span>cd2020pj1</span>資料夾然後<span>git pull</span></p>
+<p>6.輸入<span>sudo vi wsgi.py</span>並且按下<span>i</span>編輯內容將<span>’host=127.0.0.1’</span>編輯設置為10.0.2.4</p>
+<p>7.按下<span>esc</span>並且輸入<span>:wq</span>來存取，開啟<span>cd2020pj1.leo</span></p>
+<p>8.用<span>nav</span>尋找<span>allowExt</span>檔案位置並且新增<span>ttt</span>檔案</p>
+<p>9.在<span>tmp</span>下輸入<span>sudo vi oauth_scrum.txt</span>再輸入<span>python3 wsgi.py</span>開啟遠端</p>
+<p>10.進入<span>https://127.0.0.1:18443/alogin</span>測試是否可以上傳<span>ttt</span>檔案</p>
+<p>※<span> </span><span>sudo</span>為使用特殊的權限執行的程式。<span>vi</span>為編輯內容</p>
+<p>※<span><span> </span>ifconfig</span>為網卡信息的各項說</p>
+<p> </p>
+<p><span style="color: #ff0000;"> *更新問題:</span></p>
+<p>1.因為老師有將<span>cd2020pj1</span>更新，所以我們從虛擬主機下開啟<span>python3 wsgi.py</span>之模組有缺少問題</p>
+<p><span style="color: #ff0000;">解決</span><span>:</span><span> </span>pip3 install pydrive安裝此模組</p>
+<p>2.mako系統版本沒有更新，導致遠端連線出現問題</p>
+<p><span style="color: #ff0000;">解決</span><span>:</span><span> </span>輸入<span>”sudo pip3 install mako==1.1.3”</span>更新版本<span>1.1.3</span></p>
+<p><span>操作影片:</span></p>
+<p><span><iframe allowfullscreen="allowfullscreen" height="314" src="//www.youtube.com/embed/YAGirfh8vLM" width="560"></iframe></span></p>
+<p><em><strong>Ubnutu對外連線-IPV6 (須在學校操作)</strong></em></p>
+<p>1.選擇主機網路<span>NAT Network</span>設定<span>IPV6</span></p>
+<p>2.打開<span>LXTermial</span>並且輸入<span>cd /etc</span></p>
+<p>3.按照路徑進入<span>cd apt &gt; cd apt.conf.d &gt; sudo vi proxy.conf</span></p>
+<p>5.密碼<span>kmol2020</span>並且一樣按<span>i</span>鍵進入編輯模式</p>
+<p>6.輸入<span>Acquire::http::proxy "http://[2001:288:6004:17::53]:3128";</span></p>
+<p>7.按<span>esc</span>並且使用<span>:wq</span>來儲存，再用<span>sudo apt update apt</span>更新<span>apt</span></p>
+<p>8.ifconfig&gt;sudo apt install net-tools，<span>cd etc/netplan</span></p>
+<p>9.輸入<span>sudo vi 00-installer-config.yaml</span>並且按照以下方式更改縮排</p>
+<table width="1110">
+<tbody>
+<tr>
+<td>
+<p> </p>
+<p> </p>
+<p> </p>
+<p> </p>
+<p> </p>
+<p> </p>
+</td>
+<td width="1074">
+<p>network:</p>
+<p>  ethernets:</p>
+<p>    enp0s3:</p>
+<p>        dhcp4: true</p>
+<p>        dhcp6: true</p>
+<p>        nameservers:</p>
+<p>            addresses:</p>
+<p>                - 2001:b000:168::1</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>10.輸入<span>ping6 2001:288:6004:17::254</span>測試是否可以連線</p>
+<p>11.新增<span>4</span>個埠號<img alt="" height="202" src="http://mde.tw/cdbw15-2/images/23.png" width="584"/></p>
+<p>12.輸入<span>ifconfig<span> </span></span>來查詢在<span>IPV6</span>的<span>ip</span></p>
+<p>13.進入<span>cd2020pj1</span>資料夾執行<span>git config --global --add http.proxy[2001:288:6004:17::53]:3128</span></p>
+<p>13.輸入<span>sudo vi wsgi.py wsgi.py</span>將近端的<span>host</span>更改成<span>::</span>，再輸入<span>python3 wsgi.py</span></p>
+<p>15.用平常開啟近端的方式<span>https://[::1]:18443/alogin</span></p>
+<p>16.打開<span>leo</span>新增<span>ttt</span>檔案的上傳設定測試是否可以上傳</p>
+<p>操作影片:</p>
+<p><iframe allowfullscreen="allowfullscreen" height="314" src="//www.youtube.com/embed/F6WS62TluOs" width="560"></iframe><strong><br/></strong></p>
 <p><strong>week11</strong></p>
-<p>第一組 第四次會議 (WEEK12) <br/> <br/>1.成員簽到等候 2.分工作業進度回報及問題討論 3.有問題的同學提出問題 <br/> <br/>成員名單 <br/>1.40723201 (簽) 已建立完成網站 <br/>2.40723206 (簽) 已建立完成網站 小組長 <br/>3.40723213 (簽) 已建立完成網站 <br/>4.40723216 (簽) 已建立完成網站 <br/>5. 40723223(簽) 已建立完成網站 <br/>6.40723226 (簽) 已建立完成網站 <br/>7.40723229 (簽) 已建立完成網站 小組長 <br/>8.40723230 () 已建立完成網站 <br/>9.40723241 (簽) 已建立完成網站 <br/>10.40723242 (簽) 已建立完成網站 小組長 <br/>11.40723246 (group leader) (簽) 已建立完成網站<br/> <br/><span style="color: #ff0000;">topic2:</span> <br/><span style="color: #0000ff;">coppeliasim</span>:40723246 <br/><span style="color: #0000ff;">MSModelingAndTFApproaches.pdf</span>. 207 頁:6 人 <br/>40723201 1-30 <br/>40723213 31-60 <br/>40723216 61-90 <br/>40723223 91-120 <br/>40723226 121-150 <br/>40723246 151-207 <br/><span style="color: #0000ff;">MechatronicDesignCases.pdf</span>. 46 頁:2 人 <br/>40723229 1-23 <br/>40723230 24-46 <br/><span style="color: #ff0000;">topic3:</span> <br/><span style="color: #0000ff;">MechaFutureAndChallenges.pdf</span>. 38 頁:2 人 <br/>40723206 1-19 <br/>40723241 20-38 <br/><span style="color: #0000ff;">MechaEducFutureNeed.pdf</span>. 20 頁:1 人 <br/>40723246 20</p>
+<p><strong>第一組 第四次會議 (WEEK11)</strong> <br/> <br/>1.成員簽到等候 2.分工作業進度回報及問題討論 3.有問題的同學提出問題 <br/> <br/>成員名單 <br/>1.40723201 (簽) 已建立完成網站 <br/>2.40723206 (簽) 已建立完成網站 小組長 <br/>3.40723213 (簽) 已建立完成網站 <br/>4.40723216 (簽) 已建立完成網站 <br/>5. 40723223(簽) 已建立完成網站 <br/>6.40723226 (簽) 已建立完成網站 <br/>7.40723229 (簽) 已建立完成網站 小組長 <br/>8.40723230 () 已建立完成網站 <br/>9.40723241 (簽) 已建立完成網站 <br/>10.40723242 (簽) 已建立完成網站 小組長 <br/>11.40723246 (group leader) (簽) 已建立完成網站<br/> <br/><span style="color: #ff0000;">topic2:</span> <br/><span style="color: #0000ff;">coppeliasim</span>:40723246 <br/><span style="color: #0000ff;">MSModelingAndTFApproaches.pdf</span>. 207 頁:6 人 <br/>40723201 1-30 <br/>40723213 31-60 <br/>40723216 61-90 <br/>40723223 91-120 <br/>40723226 121-150 <br/>40723246 151-207 <br/><span style="color: #0000ff;">MechatronicDesignCases.pdf</span>. 46 頁:2 人 <br/>40723229 1-23 <br/>40723230 24-46 <br/><span style="color: #ff0000;">topic3:</span> <br/><span style="color: #0000ff;">MechaFutureAndChallenges.pdf</span>. 38 頁:2 人 <br/>40723206 1-19 <br/>40723241 20-38 <br/><span style="color: #0000ff;">MechaEducFutureNeed.pdf</span>. 20 頁:1 人 <br/>40723246 20</p>
 <p><strong>直播meeting4影片:</strong></p>
 <p>網址:<a href="https://youtu.be/Ti7BFHDErb8">https://youtu.be/Ti7BFHDErb8</a></p>
-<p><iframe allowfullscreen="allowfullscreen" height="314" src="//www.youtube.com/embed/Ti7BFHDErb8" width="560"></iframe></p>
-<p><strong>week12</strong></p>
-<p>MechaFutureAndChallenges (p.20~38)</p>
+<p><iframe allowfullscreen="allowfullscreen" height="314" src="//www.youtube.com/embed/Ti7BFHDErb8" width="560"></iframe><strong><br/></strong></p>
+<p><em><strong>分組作業:</strong></em></p>
+<p><strong>MechaFutureAndChallenges (p.20~38)</strong></p>
 <p>downlaod pdf:<a href="https://github.com/s40723206/cd2020/blob/master/downloads/assignment%203/MechaFutureAndChallenges.pdf">https://github.com/s40723206/cd2020/blob/master/downloads/assignment%203/MechaFutureAndChallenges.pdf</a></p>
-<br />week6~9 << <a href='week6~9.html'>Previous</a> <a href='week15~18.html'>Next</a> >> week15~18</div>
+<p><strong>week12</strong></p>
+<p>mini project-b12</p>
+<p>cdbw12-2 倉儲:<a href="https://github.com/mdecourse/cdbw12-2">https://github.com/mdecourse/cdbw12-2</a></p>
+<p>cdbw12-2 網站:<a href="http://mde.tw/cdbw12-2/content/index.html">http://mde.tw/cdbw12-2/content/index.html</a></p>
+<p><strong>week13</strong></p>
+<p>mini project-b13</p>
+<p>cdbw13-1 倉儲:<a href="https://github.com/mdecourse/cdbw13-1">https://github.com/mdecourse/cdbw13-1</a></p>
+<p>cdbw13-1 網站:<a href="http://mde.tw/cd2020/content/W13-2b.html">http://mde.tw/cd2020/content/W13-2b.html</a></p>
+<p><strong>week14</strong></p>
+<p><span><strong>第一組 第五次會議 (WEEK14) </strong><br/><br/>1.成員簽到等候 2.分工作業進度回報及問題討論 3.有問題的同學提出問題 <br/><br/>成員名單 <br/>1.40723201 (簽) 已建立完成網站 <br/>2.40723206 (簽) 已建立完成網站 小組長 <br/>3.40723213 (簽) 已建立完成網站 <br/>4.40723216 (簽) 已建立完成網站 <br/>5. 40723223(簽) 已建立完成網站 <br/>6.40723226 (簽) 已建立完成網站 <br/>7.40723229 (簽) 已建立完成網站 小組長 <br/>8.40723230 (簽) 已建立完成網站 <br/>9.40723241 (簽) 已建立完成網站 <br/>10.40723242 (簽) 已建立完成網站 小組長 <br/>11.40723246 (group leader) (簽) 已建立完成網站</span><span><br/></span></p>
+<p>1.講解ipv6連線設定及ttt檔更改的新路徑</p>
+<p>2.虛擬主機及ubnutu bug解決方式</p>
+<p></p>
+<p></p>
+<p>mini project-b14</p>
+<p>cdbw14-1 倉儲:<a href="https://github.com/mdecourse/cdbw14-1">https://github.com/mdecourse/cdbw14-1</a></p>
+<p>cdbw14-1 網站:<a href="http://mde.tw/cdbw14-1/content/index.html">http://mde.tw/cdbw14-1/content/index.html</a></p><br />week6~9 << <a href='week6~9.html'>Previous</a> <a href='week15~18.html'>Next</a> >> week15~18</div>
         
     <!-- footer -->
       <div class="container">

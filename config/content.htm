@@ -296,8 +296,94 @@ EXIT</pre>
 <li>Injection Molding magazine, May 1998 issue, R. Cramer of Dow Materials Engineering Center</li>
 </ol>
 <p><strong><span></span></strong></p>
-<p><em><strong>四輪車馬達驅動設定影片:</strong></em></p>
+<p><em><strong>四輪車馬達驅動設定</strong></em></p>
+<p><em></em>建立一台基本四輪車，並加入馬達驅動直行</p>
+<p><em><strong>影片:</strong></em></p>
 <p><em><strong><iframe allowfullscreen="allowfullscreen" height="314" src="//www.youtube.com/embed/mu8TeOt6J4E" width="560"></iframe></strong></em></p>
+<p></p>
+<p><em><strong><span color="#000000">四輪車馬達設定及鍵盤控制加速及轉彎</span></strong></em></p>
+<p><span color="#000000"><span data-contrast="auto"><span data-wac-het="1">1.先add&lt;primitive shape&lt;</span><span data-wac-het="1">導入車體形狀</span></span><span data-ccp-props="{}" data-wac-het="1"> </span></span></p>
+<p><span color="#000000"><span data-ccp-props="{}" data-wac-het="1"><span data-contrast="auto"><span data-wac-het="1">2.調整位置</span></span></span></span></p>
+<p><span data-contrast="auto"><span data-wac-het="1">3.</span></span><span data-contrast="none"><span data-wac-het="1">藉由勾選motor properties以啟動馬達，並可以藉由調整轉動速度和力矩達到所想要馬達轉動之效果，底下的lock motor when target velocity is zero</span></span><span data-contrast="auto"><span data-wac-het="1">則可以使馬達速度為零時鎖定住馬達</span></span></p>
+<p><span data-contrast="auto"><span data-wac-het="1">4.檢查碰撞，</span></span><span data-contrast="auto"><span data-wac-het="1">物件的動力學設定也必須要設定好，如下方所示物體的碰撞和物體的動態都必須打開，才能使剛剛設定好的馬達進行對輪胎的帶動</span></span><span data-ccp-props="{}" data-wac-het="1"> </span></p>
+<p><span data-ccp-props="{}" data-wac-het="1"><span>5.貼上撰寫好的鍵盤控制轉彎程式</span></span></p>
+<pre class="brush:py;auto-links:false;toolbar:false" contenteditable="false">function sysCall_init() 
+    left_front_handle= sim.getObjectHandle('left_m')
+    left_back_handle= sim.getObjectHandle('left_m')
+    right_back_handle= sim.getObjectHandle('right_m')
+    right_front_handle= sim.getObjectHandle('right_m')
+    MaxVel=2
+    leftvelocity=0
+    rightvelocity=0
+    dVel=0.5;
+    --sim.setJointTargetVelocity(left_front_handle,leftvelocity)
+    sim.setJointTargetVelocity(left_back_handle,leftvelocity)
+    sim.setJointTargetVelocity(right_back_handle,rightvelocity)
+    --sim.setJointTargetVelocity(right_front_handle,rightvelocity)
+end
+ 
+function sysCall_actuation() 
+    message,auxiliaryData=sim.getSimulatorMessage()
+    while message~=-1 do
+        if (message==sim.message_keypress) then
+            if (auxiliaryData[1]==32) then
+                -- right key
+                leftvelocity=0
+                rightvelocity=0
+                sim.setJointForce(left_front_handle, 0)
+                sim.setJointForce(left_back_handle, 0)
+                sim.setJointForce(right_back_handle, 0)
+                sim.setJointForce(right_front_handle, 0)
+                break
+            else
+                --sim.setJointForce(left_front_handle, 10000)
+                sim.setJointForce(left_back_handle, 10000)
+                sim.setJointForce(right_back_handle, 10000)
+                --sim.setJointForce(right_front_handle, 10000)
+            end
+            if (auxiliaryData[1]==2007) then
+                -- up key
+                leftvelocity=(leftvelocity+rightvelocity)/2
+                rightvelocity=leftvelocity
+                leftvelocity=leftvelocity+dVel
+                rightvelocity=rightvelocity+dVel
+            end
+            if (auxiliaryData[1]==2008) then
+                -- down key
+                leftvelocity=(leftvelocity+rightvelocity)/2
+                rightvelocity=leftvelocity
+                leftvelocity=leftvelocity-dVel
+                rightvelocity=rightvelocity-dVel
+            end
+            if (auxiliaryData[1]==2009) then
+                -- left key
+                leftvelocity=leftvelocity-dVel
+                rightvelocity=rightvelocity+dVel
+            end
+            if (auxiliaryData[1]==2010) then
+                -- right key
+                leftvelocity=leftvelocity+dVel
+                rightvelocity=rightvelocity-dVel
+            end
+        end
+        message,auxiliaryData=sim.getSimulatorMessage()
+    end
+     
+    if leftvelocity&gt;MaxVel then
+        leftvelocity=MaxVel
+    end
+    if leftvelocity&lt;-maxvel then="" leftvelocity="-MaxVel" end="" if="" rightvelocity=""&gt;MaxVel then
+                rightvelocity=MaxVel
+    end
+ 
+    --sim.setJointTargetVelocity(left_front_handle,leftvelocity)
+    sim.setJointTargetVelocity(left_back_handle,leftvelocity)
+    sim.setJointTargetVelocity(right_back_handle,rightvelocity)
+    --sim.setJointTargetVelocity(right_front_handle,rightvelocity)
+ 
+end</pre>
+<p><em><strong>操作影片:</strong></em></p>
+<p><em><strong><iframe allowfullscreen="allowfullscreen" height="314" src="//www.youtube.com/embed/nmn0ZCo9q-I" width="560"></iframe></strong></em></p>
 <p><strong>week8</strong></p>
 <p><span><strong><span color="#000000">安裝以下三個模組</span></strong></span></p>
 <p>1.pip install opencv-python</p>
@@ -306,8 +392,7 @@ EXIT</pre>
 <p><img alt="" height="280" src="/images/chrome_2020-05-23_23-24-49.png" width="596"/></p>
 <p><strong><em>第三次線上會議</em></strong></p>
 <p>1.成員簽到等候 <br/>2.分工作業進度回報及問題討論 <br/>3.有問題的同學提出問題 <br/> <br/>成員名單 <br/>1.40723201 (簽) 已建立完成網站 <br/>2.40723206 (簽) 已建立完成網站 小組長 <br/>3.40723213 (簽) 已建立完成網站 <br/>4.40723216 (簽) 已建立完成網站 <br/>5. 40723223(簽) 已建立完成網站 <br/>6.40723226 () 已建立完成網站 <br/>7.40723229 (簽) 已建立完成網站 小組長 <br/>8.40723230 (簽) 已建立完成網站 <br/>9.40723241 (簽) 已建立完成網站 <br/>10.40723242 () 已建立完成網站 小組長 <br/>11.40723246 (group leader) (簽) 已建立完成網站 <br/>12.40732319 () <br/> <br/>※作業一(4 輪車) <br/>*根據主題 0 和主題 1 的素材，您能否具體描述機械設計團隊，為了完成作業四輪機 器人需要做些什麼? <br/> <br/><span style="color: #ff0000;">四輪車馬達設定及鍵盤控制加速及轉彎</span></p>
-<p></p>
-<h2>week10~14</h2>
+<p></p><h2>week10~14</h2>
 <p><strong>week10</strong></p>
 <p><em><strong>對ssh連線</strong></em></p>
 <p>(1)到y槽的portablegit將sh_for_solvespace檔案複製並修改成sh.exe</p>
@@ -329,16 +414,102 @@ Host github.com
     IdentitiesOnly yes</pre>
 <p>(8)進入github並且在setting中的ssh將金鑰開啟並複製放入金鑰設置處</p>
 <p><iframe allowfullscreen="allowfullscreen" height="314" src="//www.youtube.com/embed/KLR2AYgxIcw" width="560"></iframe></p>
+<p><em><strong>Ubnutu對外連線-IPV4</strong></em></p>
+<p>1.選擇主機網路<span>NAT Network</span>，新增埠號如下圖所示<span>:</span></p>
+<p><span><img alt="" height="202" src="http://mde.tw/cdbw15-2/images/23.png" width="584"/></span></p>
+<p>2.登入密碼一樣是<span>kmol2020</span></p>
+<p>3.打開<span>LXTermial</span>輸入<span>ifconfig&gt;sudo apt install net-tools</span>輸入密碼也是<span>kmol2020</span></p>
+<p>4.輸入<span>ping6 127.0.0.1</span>測試是否可執行</p>
+<p>5.進入<span>cd2020pj1</span>資料夾然後<span>git pull</span></p>
+<p>6.輸入<span>sudo vi wsgi.py</span>並且按下<span>i</span>編輯內容將<span>’host=127.0.0.1’</span>編輯設置為10.0.2.4</p>
+<p>7.按下<span>esc</span>並且輸入<span>:wq</span>來存取，開啟<span>cd2020pj1.leo</span></p>
+<p>8.用<span>nav</span>尋找<span>allowExt</span>檔案位置並且新增<span>ttt</span>檔案</p>
+<p>9.在<span>tmp</span>下輸入<span>sudo vi oauth_scrum.txt</span>再輸入<span>python3 wsgi.py</span>開啟遠端</p>
+<p>10.進入<span>https://127.0.0.1:18443/alogin</span>測試是否可以上傳<span>ttt</span>檔案</p>
+<p>※<span> </span><span>sudo</span>為使用特殊的權限執行的程式。<span>vi</span>為編輯內容</p>
+<p>※<span><span> </span>ifconfig</span>為網卡信息的各項說</p>
+<p> </p>
+<p><span style="color: #ff0000;"> *更新問題:</span></p>
+<p>1.因為老師有將<span>cd2020pj1</span>更新，所以我們從虛擬主機下開啟<span>python3 wsgi.py</span>之模組有缺少問題</p>
+<p><span style="color: #ff0000;">解決</span><span>:</span><span> </span>pip3 install pydrive安裝此模組</p>
+<p>2.mako系統版本沒有更新，導致遠端連線出現問題</p>
+<p><span style="color: #ff0000;">解決</span><span>:</span><span> </span>輸入<span>”sudo pip3 install mako==1.1.3”</span>更新版本<span>1.1.3</span></p>
+<p><span>操作影片:</span></p>
+<p><span><iframe allowfullscreen="allowfullscreen" height="314" src="//www.youtube.com/embed/YAGirfh8vLM" width="560"></iframe></span></p>
+<p><em><strong>Ubnutu對外連線-IPV6 (須在學校操作)</strong></em></p>
+<p>1.選擇主機網路<span>NAT Network</span>設定<span>IPV6</span></p>
+<p>2.打開<span>LXTermial</span>並且輸入<span>cd /etc</span></p>
+<p>3.按照路徑進入<span>cd apt &gt; cd apt.conf.d &gt; sudo vi proxy.conf</span></p>
+<p>5.密碼<span>kmol2020</span>並且一樣按<span>i</span>鍵進入編輯模式</p>
+<p>6.輸入<span>Acquire::http::proxy "http://[2001:288:6004:17::53]:3128";</span></p>
+<p>7.按<span>esc</span>並且使用<span>:wq</span>來儲存，再用<span>sudo apt update apt</span>更新<span>apt</span></p>
+<p>8.ifconfig&gt;sudo apt install net-tools，<span>cd etc/netplan</span></p>
+<p>9.輸入<span>sudo vi 00-installer-config.yaml</span>並且按照以下方式更改縮排</p>
+<table width="1110">
+<tbody>
+<tr>
+<td>
+<p> </p>
+<p> </p>
+<p> </p>
+<p> </p>
+<p> </p>
+<p> </p>
+</td>
+<td width="1074">
+<p>network:</p>
+<p>  ethernets:</p>
+<p>    enp0s3:</p>
+<p>        dhcp4: true</p>
+<p>        dhcp6: true</p>
+<p>        nameservers:</p>
+<p>            addresses:</p>
+<p>                - 2001:b000:168::1</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>10.輸入<span>ping6 2001:288:6004:17::254</span>測試是否可以連線</p>
+<p>11.新增<span>4</span>個埠號<img alt="" height="202" src="http://mde.tw/cdbw15-2/images/23.png" width="584"/></p>
+<p>12.輸入<span>ifconfig<span> </span></span>來查詢在<span>IPV6</span>的<span>ip</span></p>
+<p>13.進入<span>cd2020pj1</span>資料夾執行<span>git config --global --add http.proxy[2001:288:6004:17::53]:3128</span></p>
+<p>13.輸入<span>sudo vi wsgi.py wsgi.py</span>將近端的<span>host</span>更改成<span>::</span>，再輸入<span>python3 wsgi.py</span></p>
+<p>15.用平常開啟近端的方式<span>https://[::1]:18443/alogin</span></p>
+<p>16.打開<span>leo</span>新增<span>ttt</span>檔案的上傳設定測試是否可以上傳</p>
+<p>操作影片:</p>
+<p><iframe allowfullscreen="allowfullscreen" height="314" src="//www.youtube.com/embed/F6WS62TluOs" width="560"></iframe><strong><br/></strong></p>
 <p><strong>week11</strong></p>
-<p>第一組 第四次會議 (WEEK12) <br/> <br/>1.成員簽到等候 2.分工作業進度回報及問題討論 3.有問題的同學提出問題 <br/> <br/>成員名單 <br/>1.40723201 (簽) 已建立完成網站 <br/>2.40723206 (簽) 已建立完成網站 小組長 <br/>3.40723213 (簽) 已建立完成網站 <br/>4.40723216 (簽) 已建立完成網站 <br/>5. 40723223(簽) 已建立完成網站 <br/>6.40723226 (簽) 已建立完成網站 <br/>7.40723229 (簽) 已建立完成網站 小組長 <br/>8.40723230 () 已建立完成網站 <br/>9.40723241 (簽) 已建立完成網站 <br/>10.40723242 (簽) 已建立完成網站 小組長 <br/>11.40723246 (group leader) (簽) 已建立完成網站<br/> <br/><span style="color: #ff0000;">topic2:</span> <br/><span style="color: #0000ff;">coppeliasim</span>:40723246 <br/><span style="color: #0000ff;">MSModelingAndTFApproaches.pdf</span>. 207 頁:6 人 <br/>40723201 1-30 <br/>40723213 31-60 <br/>40723216 61-90 <br/>40723223 91-120 <br/>40723226 121-150 <br/>40723246 151-207 <br/><span style="color: #0000ff;">MechatronicDesignCases.pdf</span>. 46 頁:2 人 <br/>40723229 1-23 <br/>40723230 24-46 <br/><span style="color: #ff0000;">topic3:</span> <br/><span style="color: #0000ff;">MechaFutureAndChallenges.pdf</span>. 38 頁:2 人 <br/>40723206 1-19 <br/>40723241 20-38 <br/><span style="color: #0000ff;">MechaEducFutureNeed.pdf</span>. 20 頁:1 人 <br/>40723246 20</p>
+<p><strong>第一組 第四次會議 (WEEK11)</strong> <br/> <br/>1.成員簽到等候 2.分工作業進度回報及問題討論 3.有問題的同學提出問題 <br/> <br/>成員名單 <br/>1.40723201 (簽) 已建立完成網站 <br/>2.40723206 (簽) 已建立完成網站 小組長 <br/>3.40723213 (簽) 已建立完成網站 <br/>4.40723216 (簽) 已建立完成網站 <br/>5. 40723223(簽) 已建立完成網站 <br/>6.40723226 (簽) 已建立完成網站 <br/>7.40723229 (簽) 已建立完成網站 小組長 <br/>8.40723230 () 已建立完成網站 <br/>9.40723241 (簽) 已建立完成網站 <br/>10.40723242 (簽) 已建立完成網站 小組長 <br/>11.40723246 (group leader) (簽) 已建立完成網站<br/> <br/><span style="color: #ff0000;">topic2:</span> <br/><span style="color: #0000ff;">coppeliasim</span>:40723246 <br/><span style="color: #0000ff;">MSModelingAndTFApproaches.pdf</span>. 207 頁:6 人 <br/>40723201 1-30 <br/>40723213 31-60 <br/>40723216 61-90 <br/>40723223 91-120 <br/>40723226 121-150 <br/>40723246 151-207 <br/><span style="color: #0000ff;">MechatronicDesignCases.pdf</span>. 46 頁:2 人 <br/>40723229 1-23 <br/>40723230 24-46 <br/><span style="color: #ff0000;">topic3:</span> <br/><span style="color: #0000ff;">MechaFutureAndChallenges.pdf</span>. 38 頁:2 人 <br/>40723206 1-19 <br/>40723241 20-38 <br/><span style="color: #0000ff;">MechaEducFutureNeed.pdf</span>. 20 頁:1 人 <br/>40723246 20</p>
 <p><strong>直播meeting4影片:</strong></p>
 <p>網址:<a href="https://youtu.be/Ti7BFHDErb8">https://youtu.be/Ti7BFHDErb8</a></p>
-<p><iframe allowfullscreen="allowfullscreen" height="314" src="//www.youtube.com/embed/Ti7BFHDErb8" width="560"></iframe></p>
-<p><strong>week12</strong></p>
-<p>MechaFutureAndChallenges (p.20~38)</p>
+<p><iframe allowfullscreen="allowfullscreen" height="314" src="//www.youtube.com/embed/Ti7BFHDErb8" width="560"></iframe><strong><br/></strong></p>
+<p><em><strong>分組作業:</strong></em></p>
+<p><strong>MechaFutureAndChallenges (p.20~38)</strong></p>
 <p>downlaod pdf:<a href="https://github.com/s40723206/cd2020/blob/master/downloads/assignment%203/MechaFutureAndChallenges.pdf">https://github.com/s40723206/cd2020/blob/master/downloads/assignment%203/MechaFutureAndChallenges.pdf</a></p>
-<h2>week15~18</h2>
-<h1>Assignment</h1>
+<p><strong>week12</strong></p>
+<p>mini project-b12</p>
+<p>cdbw12-2 倉儲:<a href="https://github.com/mdecourse/cdbw12-2">https://github.com/mdecourse/cdbw12-2</a></p>
+<p>cdbw12-2 網站:<a href="http://mde.tw/cdbw12-2/content/index.html">http://mde.tw/cdbw12-2/content/index.html</a></p>
+<p><strong>week13</strong></p>
+<p>mini project-b13</p>
+<p>cdbw13-1 倉儲:<a href="https://github.com/mdecourse/cdbw13-1">https://github.com/mdecourse/cdbw13-1</a></p>
+<p>cdbw13-1 網站:<a href="http://mde.tw/cd2020/content/W13-2b.html">http://mde.tw/cd2020/content/W13-2b.html</a></p>
+<p><strong>week14</strong></p>
+<p><span><strong>第一組 第五次會議 (WEEK14) </strong><br/><br/>1.成員簽到等候 2.分工作業進度回報及問題討論 3.有問題的同學提出問題 <br/><br/>成員名單 <br/>1.40723201 (簽) 已建立完成網站 <br/>2.40723206 (簽) 已建立完成網站 小組長 <br/>3.40723213 (簽) 已建立完成網站 <br/>4.40723216 (簽) 已建立完成網站 <br/>5. 40723223(簽) 已建立完成網站 <br/>6.40723226 (簽) 已建立完成網站 <br/>7.40723229 (簽) 已建立完成網站 小組長 <br/>8.40723230 (簽) 已建立完成網站 <br/>9.40723241 (簽) 已建立完成網站 <br/>10.40723242 (簽) 已建立完成網站 小組長 <br/>11.40723246 (group leader) (簽) 已建立完成網站</span><span><br/></span></p>
+<p>1.講解ipv6連線設定及ttt檔更改的新路徑</p>
+<p>2.虛擬主機及ubnutu bug解決方式</p>
+<p></p>
+<p></p>
+<p>mini project-b14</p>
+<p>cdbw14-1 倉儲:<a href="https://github.com/mdecourse/cdbw14-1">https://github.com/mdecourse/cdbw14-1</a></p>
+<p>cdbw14-1 網站:<a href="http://mde.tw/cdbw14-1/content/index.html">http://mde.tw/cdbw14-1/content/index.html</a></p><h2>week15~18</h2>
+<p><strong>week15</strong></p>
+<p>mini project-b15</p>
+<p>cdbw15-2 倉儲:<a href="https://github.com/mdecourse/cdbw15-2">https://github.com/mdecourse/cdbw15-2</a></p>
+<p>cdbw15-2 網站:<a href="http://mde.tw/cdbw15-2/content/index.html">http://mde.tw/cdbw15-2/content/index.html</a></p>
+<p><strong>week16</strong></p>
+<p>每人進行ipv6對外連線並連結到個人特定的proxy</p>
+<p>連結:<a href="https://[2001:288:6004:17:2020:2:0:7206]:19443">https://[2001:288:6004:17:2020:2:0:7206]:19443/</a></p><h1>Assignment</h1>
 <h2>assignment1</h2>
 <h3>Random Grouping</h3>
 <div class="syntaxhighlighter py">要進行隨機分組及隨機點名，必須先了解程式裡導入的模組及在模組中所用的<br/>語法、迴圈:<span>request</span>、<span>ast.literal_eval</span>、<span>random</span>、<span>for</span>迴圈<br/><br/>(1)<span> request</span>模組:此模組是為了可以使用 Python 來下載網頁上的資料，是以<br/><span>request</span>模組建立適當的 HTTP 請求，透過 HTTP 請求從網頁伺服器下載<br/>指定的資料，分為兩種模式Post、Get。<br/><br/>參考文獻:<span> </span><a href="https://ithelp.ithome.com.tw/articles/10206215"><span>https://ithelp.ithome.com.tw/articles/10206215</span><br/></a><br/>(2)<span> </span><span>ast</span>模組: 此模組是python原始碼到位元組碼的一種中間產物，藉助<span>ast</span><br/>模組可以從語法樹的角度分析原始碼結構，其中的語法<span>ast.literal_eval</span><br/>是為了能夠安全地評估表達式節點或包含Python文字或容器顯示的字符<br/>串。提供的字符串或節點只能由以下Python文字結構組成：字符串、字<br/>節、數字、元組、列表、字典、集合、布林值、None。<br/><br/>參考文獻:<span> </span><a href="https://docs.python.org/3/library/ast.html"><span>https://docs.python.org/3/library/ast.html</span></a><br/><span><a href="https://www.itread01.com/content/1544847254.html">https://www.itread01.com/content/1544847254.html<br/></a></span><br/>(3)<span> </span><span>random</span>模組:此模組用於生成偽隨機數，且有許多種用法，例如:隨機選取<br/><span>choice</span>、隨機選取<span> sample</span><span> </span>(一次選多筆資料)、隨機調換順序<span> shuffle</span><span> </span>(就<br/>地調換順序)、隨機取得亂數<span> </span><span>random</span><span> </span>(0~1之間的隨機亂數)、隨機取得亂<br/>數<span> </span><span>uniform</span><span> </span>(可以指定範圍)。<br/><br/>參考文獻:<span> </span><a href="https://ithelp.ithome.com.tw/articles/10207483"><span>https://ithelp.ithome.com.tw/articles/10207483</span><br/></a><br/>(4)<span> </span><span>for</span>迴圈: 在處理資料的時候，時常會需要重複執行某些相同的步驟；而迴<br/>圈 (loop) 的作用是讓指定的某段敘述在條件符合的情況下一直重覆執行，<br/>是程式設計中很重要的一種控制結構，且分為兩類:<span>for</span>、<span>while</span></div>
